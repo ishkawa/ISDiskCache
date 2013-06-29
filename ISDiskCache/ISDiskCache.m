@@ -33,7 +33,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 #endif
 }
 
-#pragma mark - cache paths
+#pragma mark - paths
 
 - (NSString *)rootPath
 {
@@ -84,7 +84,83 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     return [paths filteredArrayUsingPredicate:predicate];
 }
 
-#pragma mark -
+#pragma mark - key
+
+- (id)objectForKey:(id <NSCoding>)key
+{
+    NSString *path = [self filePathForKey:key];
+    if (![self.existingFilePaths containsObject:path]) {
+        return nil;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
+        return nil;
+    }
+    
+    NSError *getAttributesError = nil;
+    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
+    if (getAttributesError) {
+        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    }
+    [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
+    
+    NSError *setAttributesError = nil;
+    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&setAttributesError]) {
+        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    }
+    
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
+- (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
+{
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    NSString *path = [self filePathForKey:key];
+    NSString *directoryPath = [path stringByDeletingLastPathComponent];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:directoryPath isDirectory:NULL]) {
+        NSError *error = nil;
+        if (![fileManager createDirectoryAtPath:directoryPath
+                    withIntermediateDirectories:YES
+                                     attributes:nil
+                                          error:&error]) {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
+    }
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    [data writeToFile:path atomically:YES];
+    
+    self.existingFilePaths = [self.existingFilePaths arrayByAddingObject:path];
+    dispatch_semaphore_signal(self.semaphore);
+}
+
+- (void)removeObjectForKey:(id)key
+{
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    NSString *filePath = [self filePathForKey:key];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath isDirectory:NULL]) {
+        NSError *error = nil;
+        if (![fileManager removeItemAtPath:filePath error:&error]) {
+            [NSException raise:NSInvalidArgumentException format:@"%@", error];
+        }
+    }
+    
+    NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
+    [self removeDirectoryIfEmpty:directoryPath];
+    
+    NSMutableArray *keys = [self.existingFilePaths mutableCopy];
+    [keys removeObject:filePath];
+    self.existingFilePaths = [keys copy];
+    dispatch_semaphore_signal(self.semaphore);
+}
+
+#pragma mark - remove
 
 - (void)removeDirectoryIfEmpty:(NSString *)directoryPath
 {
@@ -139,107 +215,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
             }
         }
     }
-    dispatch_semaphore_signal(self.semaphore);
-}
-
-#pragma mark - NSDictionary
-
-- (id)initWithObjects:(NSArray *)objects forKeys:(NSArray *)keys
-{
-    self = [self init];
-    if (self) {
-        for (NSString *key in keys) {
-            NSInteger index = [keys indexOfObject:key];
-            id object = [objects objectAtIndex:index];
-            [self setObject:object forKey:key];
-        }
-    }
-    return self;
-}
-
-- (NSUInteger)count
-{
-    return [self.existingFilePaths count];
-}
-
-- (id)objectForKey:(id <NSCoding>)key
-{
-    NSString *path = [self filePathForKey:key];
-    if (![self.existingFilePaths containsObject:path]) {
-        return nil;
-    }
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
-        return nil;
-    }
-    
-    NSError *getAttributesError = nil;
-    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
-    if (getAttributesError) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
-    }
-    [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
-    
-    NSError *setAttributesError = nil;
-    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&setAttributesError]) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
-    }
-    
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
-}
-
-- (NSEnumerator *)keyEnumerator
-{
-    return [self.existingFilePaths objectEnumerator];
-}
-
-#pragma mark - NSMutableDictionary
-
-- (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
-{
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    NSString *path = [self filePathForKey:key];
-    NSString *directoryPath = [path stringByDeletingLastPathComponent];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:directoryPath isDirectory:NULL]) {
-        NSError *error = nil;
-        if (![fileManager createDirectoryAtPath:directoryPath
-                    withIntermediateDirectories:YES
-                                     attributes:nil
-                                          error:&error]) {
-            [NSException raise:ISDiskCacheException format:@"%@", error];
-        }
-    }
-    
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    [data writeToFile:path atomically:YES];
-    
-    self.existingFilePaths = [self.existingFilePaths arrayByAddingObject:path];
-    dispatch_semaphore_signal(self.semaphore);
-}
-
-- (void)removeObjectForKey:(id)key
-{
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    NSString *filePath = [self filePathForKey:key];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:filePath isDirectory:NULL]) {
-        NSError *error = nil;
-        if (![fileManager removeItemAtPath:filePath error:&error]) {
-            [NSException raise:NSInvalidArgumentException format:@"%@", error];
-        }
-    }
-    
-    NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
-    [self removeDirectoryIfEmpty:directoryPath];
-    
-    NSMutableArray *keys = [self.existingFilePaths mutableCopy];
-    [keys removeObject:filePath];
-    self.existingFilePaths = [keys copy];
     dispatch_semaphore_signal(self.semaphore);
 }
 

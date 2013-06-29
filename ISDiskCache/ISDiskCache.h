@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface ISDiskCache : NSMutableDictionary {
+@interface ISDiskCache : NSObject {
     NSString *_rootPath;
 }
 
@@ -8,14 +8,12 @@
 @property (nonatomic, readonly) NSArray *existingFilePaths;
 
 - (NSString *)filePathForKey:(id <NSCoding>)key;
+
+- (id)objectForKey:(id <NSCoding>)key;
+- (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
+
+- (void)removeObjectForKey:(id <NSCoding>)key;
 - (void)removeObjectsByAccessedDate:(NSDate *)modificationDate;
 - (void)removeObjectsUsingBlock:(BOOL (^)(NSString *filePath))block;
-
-// NSDictionary
-- (id)objectForKey:(id <NSCoding>)key;
-
-// NSMutableDictioanry
-- (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
-- (void)removeObjectForKey:(id <NSCoding>)key;
 
 @end
