@@ -48,13 +48,12 @@
 {
     [cache setObject:value forKey:key];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];
-    [cache objectForKey:key];
     
     NSDate *accessedDate = [NSDate date];
+    [cache objectForKey:key];
+    
     NSString *path = [cache filePathForKey:key];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *getAttributesError = nil;
-    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
     NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
     
     STAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0, nil);
