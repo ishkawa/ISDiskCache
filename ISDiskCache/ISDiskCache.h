@@ -8,7 +8,7 @@
 @property (nonatomic, readonly) NSArray *existingFilePaths;
 
 - (NSString *)filePathForKey:(id <NSCoding>)key;
-- (void)removeObjectsByModificationDate:(NSDate *)modificationDate;
+- (void)removeObjectsByAccessedDate:(NSDate *)modificationDate;
 - (void)removeObjectsUsingBlock:(BOOL (^)(NSString *filePath))block;
 
 // NSDictionary

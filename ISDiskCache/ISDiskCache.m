@@ -84,7 +84,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     }
 }
 
-- (void)removeObjectsByModificationDate:(NSDate *)borderDate
+- (void)removeObjectsByAccessedDate:(NSDate *)borderDate
 {
     [self removeObjectsUsingBlock:^BOOL(NSString *filePath) {
         NSFileManager *fileManager = [NSFileManager defaultManager];

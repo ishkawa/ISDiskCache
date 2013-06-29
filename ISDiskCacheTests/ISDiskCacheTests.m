@@ -76,10 +76,10 @@
 - (void)testRemoveObjectsByModificationDate
 {
     [cache setObject:value forKey:key];
-    [cache removeObjectsByModificationDate:[NSDate dateWithTimeIntervalSinceNow:-10.0]];
+    [cache removeObjectsByAccessedDate:[NSDate dateWithTimeIntervalSinceNow:-10.0]];
     STAssertEqualObjects([cache objectForKey:key], value, @"should not remove object.");
     
-    [cache removeObjectsByModificationDate:[NSDate date]];
+    [cache removeObjectsByAccessedDate:[NSDate date]];
     STAssertNil([cache objectForKey:key], @"should remove object.");
 }
 
