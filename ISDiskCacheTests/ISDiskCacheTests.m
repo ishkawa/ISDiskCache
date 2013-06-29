@@ -113,7 +113,7 @@
     NSString *filePath = [cache filePathForKey:key];
     ISDiskCache *newCache = [[ISDiskCache alloc] init];
 
-    STAssertTrue([newCache.existingFilePaths containsObject:filePath], @"");
+    STAssertTrue([newCache.filePaths containsObject:filePath], @"");
 }
 
 @end

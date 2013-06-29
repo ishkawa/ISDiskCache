@@ -5,7 +5,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 @interface ISDiskCache ()
 
-@property (nonatomic, strong) NSArray *existingFilePaths;
+@property (nonatomic, strong) NSArray *filePaths;
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 #else
@@ -20,7 +20,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 {
     self = [super init];
     if (self) {
-        _existingFilePaths = [self validFilePathsUnderPath:self.rootPath];
+        _filePaths = [self validFilePathsUnderPath:self.rootPath];
         _semaphore = dispatch_semaphore_create(1);
     }
     return self;
@@ -89,7 +89,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (id)objectForKey:(id <NSCoding>)key
 {
     NSString *path = [self filePathForKey:key];
-    if (![self.existingFilePaths containsObject:path]) {
+    if (![self.filePaths containsObject:path]) {
         return nil;
     }
     
@@ -134,7 +134,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     [data writeToFile:path atomically:YES];
     
-    self.existingFilePaths = [self.existingFilePaths arrayByAddingObject:path];
+    self.filePaths = [self.filePaths arrayByAddingObject:path];
     dispatch_semaphore_signal(self.semaphore);
 }
 
@@ -154,9 +154,9 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
     [self removeDirectoryIfEmpty:directoryPath];
     
-    NSMutableArray *keys = [self.existingFilePaths mutableCopy];
+    NSMutableArray *keys = [self.filePaths mutableCopy];
     [keys removeObject:filePath];
-    self.existingFilePaths = [keys copy];
+    self.filePaths = [keys copy];
     dispatch_semaphore_signal(self.semaphore);
 }
 

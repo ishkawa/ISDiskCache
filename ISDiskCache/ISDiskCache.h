@@ -5,7 +5,7 @@
 }
 
 @property (nonatomic, readonly) NSString *rootPath;
-@property (nonatomic, readonly) NSArray *existingFilePaths;
+@property (nonatomic, readonly) NSArray *filePaths;
 
 - (NSString *)filePathForKey:(id <NSCoding>)key;
 
