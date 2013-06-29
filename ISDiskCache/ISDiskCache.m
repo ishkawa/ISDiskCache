@@ -2,23 +2,10 @@
 #import <CommonCrypto/CommonCrypto.h>
 
 static NSString *const ISDiskCacheException = @"ISDiskCacheException";
-NSString *ISCacheKeyMake(id <NSCoding> key)
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:key];
-	if ([data length] == 0) {
-		return nil;
-	}
-    
-	unsigned char result[16];
-    CC_MD5([data bytes], [data length], result);
-	return [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-            result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],result[12], result[13], result[14], result[15]];
-}
 
 @interface ISDiskCache ()
 
-@property (nonatomic, strong) NSArray *existingKeys;
+@property (nonatomic, strong) NSArray *existingFilePaths;
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 #else
@@ -33,7 +20,7 @@ NSString *ISCacheKeyMake(id <NSCoding> key)
 {
     self = [super init];
     if (self) {
-        _existingKeys = @[];
+        _existingFilePaths = @[];
         _semaphore = dispatch_semaphore_create(1);
         
         [self createCacheDirectories];
@@ -60,8 +47,19 @@ NSString *ISCacheKeyMake(id <NSCoding> key)
     return _rootPath;
 }
 
-- (NSString *)pathForCacheKey:(NSString *)cacheKey
+- (NSString *)filePathForKey:(id<NSCoding>)key
 {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:key];
+	if ([data length] == 0) {
+		return nil;
+	}
+    
+	unsigned char result[16];
+    CC_MD5([data bytes], [data length], result);
+	NSString *cacheKey = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],result[12], result[13], result[14], result[15]];
+    
     NSString *prefix = [cacheKey substringToIndex:2];
     NSString *directoryPath = [self.rootPath stringByAppendingPathComponent:prefix];
     return [directoryPath stringByAppendingPathComponent:cacheKey];
@@ -111,18 +109,17 @@ NSString *ISCacheKeyMake(id <NSCoding> key)
 
 - (NSUInteger)count
 {
-    return [self.existingKeys count];
+    return [self.existingFilePaths count];
 }
 
-- (id)objectForKey:(id)key
+- (id)objectForKey:(id <NSCoding>)key
 {
-    NSString *cacheKey = ISCacheKeyMake(key);
-    if (![self.existingKeys containsObject:cacheKey]) {
+    NSString *path = [self filePathForKey:key];
+    if (![self.existingFilePaths containsObject:path]) {
         return nil;
     }
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [self pathForCacheKey:cacheKey];
     NSError *getAttributesError = nil;
     NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
     if (getAttributesError) {
@@ -141,7 +138,7 @@ NSString *ISCacheKeyMake(id <NSCoding> key)
 
 - (NSEnumerator *)keyEnumerator
 {
-    return [self.existingKeys objectEnumerator];
+    return [self.existingFilePaths objectEnumerator];
 }
 
 #pragma mark - NSMutableDictionary
@@ -149,29 +146,27 @@ NSString *ISCacheKeyMake(id <NSCoding> key)
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    NSString *cacheKey = ISCacheKeyMake(key);
-    NSString *path = [self pathForCacheKey:cacheKey];
+    NSString *path = [self filePathForKey:key];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     [data writeToFile:path atomically:YES];
     
-    self.existingKeys = [self.existingKeys arrayByAddingObject:cacheKey];
+    self.existingFilePaths = [self.existingFilePaths arrayByAddingObject:path];
     dispatch_semaphore_signal(self.semaphore);
 }
 
 - (void)removeObjectForKey:(id)key
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    NSString *cacheKey = ISCacheKeyMake(key);
-    NSString *path = [self pathForCacheKey:cacheKey];
+    NSString *path = [self filePathForKey:key];
     
     NSError *error = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
         [NSException raise:NSInvalidArgumentException format:@"%@", error];
     }
     
-    NSMutableArray *keys = [self.existingKeys mutableCopy];
-    [keys removeObject:cacheKey];
-    self.existingKeys = [keys copy];
+    NSMutableArray *keys = [self.existingFilePaths mutableCopy];
+    [keys removeObject:path];
+    self.existingFilePaths = [keys copy];
     dispatch_semaphore_signal(self.semaphore);
 }
 

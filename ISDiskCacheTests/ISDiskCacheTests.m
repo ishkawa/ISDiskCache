@@ -51,8 +51,7 @@
     [cache objectForKey:key];
     
     NSDate *accessedDate = [NSDate date];
-    NSString *cacheKey = ISCacheKeyMake(key);
-    NSString *path = [cache pathForCacheKey:cacheKey];
+    NSString *path = [cache filePathForKey:key];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *getAttributesError = nil;
     NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
