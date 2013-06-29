@@ -22,8 +22,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     if (self) {
         _existingFilePaths = @[];
         _semaphore = dispatch_semaphore_create(1);
-        
-        [self createCacheDirectories];
     }
     return self;
 }
@@ -65,33 +63,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     return [directoryPath stringByAppendingPathComponent:cacheKey];
 }
 
-- (void)createCacheDirectories
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    BOOL isDirectory = NO;
-    BOOL exists = [fileManager fileExistsAtPath:self.rootPath isDirectory:&isDirectory];
-    if (!exists || !isDirectory) {
-        [fileManager createDirectoryAtPath:self.rootPath
-               withIntermediateDirectories:YES
-                                attributes:nil
-                                     error:nil];
-    }
-    
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 16; j++) {
-            NSString *path = [NSString stringWithFormat:@"%@/%X%X", self.rootPath, i, j];
-            exists = [fileManager fileExistsAtPath:path isDirectory:&isDirectory];
-            if (!exists || !isDirectory) {
-                [fileManager createDirectoryAtPath:path
-                       withIntermediateDirectories:YES
-                                        attributes:nil
-                                             error:nil];
-            }
-        }
-    }
-}
-
 #pragma mark - NSDictionary
 
 - (id)initWithObjects:(NSArray *)objects forKeys:(NSArray *)keys
@@ -120,6 +91,10 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     }
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
+        return nil;
+    }
+    
     NSError *getAttributesError = nil;
     NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
     if (getAttributesError) {
@@ -147,6 +122,19 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *path = [self filePathForKey:key];
+    NSString *directoryPath = [path stringByDeletingLastPathComponent];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:directoryPath isDirectory:NULL]) {
+        NSError *error = nil;
+        if (![fileManager createDirectoryAtPath:directoryPath
+                    withIntermediateDirectories:YES
+                                     attributes:nil
+                                          error:&error]) {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
+    }
+    
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     [data writeToFile:path atomically:YES];
     
@@ -159,9 +147,12 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *path = [self filePathForKey:key];
     
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-        [NSException raise:NSInvalidArgumentException format:@"%@", error];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:path isDirectory:NULL]) {
+        NSError *error = nil;
+        if (![fileManager removeItemAtPath:path error:&error]) {
+            [NSException raise:NSInvalidArgumentException format:@"%@", error];
+        }
     }
     
     NSMutableArray *keys = [self.existingFilePaths mutableCopy];
