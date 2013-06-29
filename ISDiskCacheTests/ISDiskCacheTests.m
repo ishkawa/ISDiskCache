@@ -29,14 +29,14 @@
     [super tearDown];
 }
 
-- (void)testSetObject
+- (void)testSetObjectForKey
 {
     [cache setObject:value forKey:key];
     
     STAssertEqualObjects([cache objectForKey:key], value, @"object did not match set object.");
 }
 
-- (void)testRemoveObject
+- (void)testRemoveObjectForKey
 {
     [cache setObject:value forKey:key];
     [cache removeObjectForKey:key];
@@ -57,6 +57,26 @@
     NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
     
     STAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0, nil);
+}
+
+- (void)testRemoveObjectsUsingBlock
+{
+    [cache setObject:value forKey:key];
+    [cache removeObjectsUsingBlock:^BOOL(NSString *filePath) {
+        return YES;
+    }];
+    
+    STAssertNil([cache objectForKey:key], @"cache should be empty.");
+}
+
+- (void)testRemoveObjectsByModificationDate
+{
+    [cache setObject:value forKey:key];
+    [cache removeObjectsByModificationDate:[NSDate dateWithTimeIntervalSinceNow:-10.0]];
+    STAssertEqualObjects([cache objectForKey:key], value, @"should not remove object.");
+    
+    [cache removeObjectsByModificationDate:[NSDate date]];
+    STAssertNil([cache objectForKey:key], @"should remove object.");
 }
 
 @end

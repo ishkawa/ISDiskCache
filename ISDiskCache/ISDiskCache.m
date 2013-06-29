@@ -33,7 +33,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 #endif
 }
 
-#pragma mark -
+#pragma mark - cache paths
 
 - (NSString *)rootPath
 {
@@ -61,6 +61,46 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     NSString *prefix = [cacheKey substringToIndex:2];
     NSString *directoryPath = [self.rootPath stringByAppendingPathComponent:prefix];
     return [directoryPath stringByAppendingPathComponent:cacheKey];
+}
+
+#pragma mark -
+
+- (void)removeObjectsByModificationDate:(NSDate *)borderDate
+{
+    [self removeObjectsUsingBlock:^BOOL(NSString *filePath) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error = nil;
+        NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:filePath error:&error] mutableCopy];
+        if (error) {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
+        
+        NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
+        return [modificationDate timeIntervalSinceDate:borderDate] < 0.0;
+    }];
+}
+
+- (void)removeObjectsUsingBlock:(BOOL (^)(NSString *))block
+{
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (NSString *path in [fileManager subpathsAtPath:self.rootPath]) {
+        NSString *filePath = [self.rootPath stringByAppendingPathComponent:path];
+        if ([[filePath lastPathComponent] hasPrefix:@"."]) {
+            continue;
+        }
+        
+        BOOL isDirectory;
+        if ([fileManager fileExistsAtPath:filePath isDirectory:&isDirectory] && !isDirectory) {
+            if (block(filePath)) {
+                NSError *error = nil;
+                if (![fileManager removeItemAtPath:filePath error:&error]) {
+                    [NSException raise:ISDiskCacheException format:@"%@", error];
+                }
+            }
+        }
+    }
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 #pragma mark - NSDictionary
