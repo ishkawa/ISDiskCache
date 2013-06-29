@@ -18,6 +18,11 @@ static NSString *ISCacheKeyMake(id <NSCoding> key)
 @interface ISDiskCache ()
 
 @property (nonatomic, strong) NSArray *existingKeys;
+#if OS_OBJECT_USE_OBJC
+@property (nonatomic, strong) dispatch_semaphore_t semaphore;
+#else
+@property (nonatomic, assign) dispatch_semaphore_t semaphore;
+#endif
 
 @end
 
@@ -27,11 +32,22 @@ static NSString *ISCacheKeyMake(id <NSCoding> key)
 {
     self = [super init];
     if (self) {
-        self.existingKeys = @[];
+        _existingKeys = @[];
+        _semaphore = dispatch_semaphore_create(1);
+        
         [self createCacheDirectories];
     }
     return self;
 }
+
+- (void)dealloc
+{
+#if !OS_OBJECT_USE_OBJC
+    dispatch_release(_semaphore);
+#endif
+}
+
+#pragma mark -
 
 - (NSString *)rootPath
 {
@@ -117,16 +133,19 @@ static NSString *ISCacheKeyMake(id <NSCoding> key)
 
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
 {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *cacheKey = ISCacheKeyMake(key);
     NSString *path = [self pathForCacheKey:cacheKey];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     [data writeToFile:path atomically:YES];
     
     self.existingKeys = [self.existingKeys arrayByAddingObject:cacheKey];
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 - (void)removeObjectForKey:(id)key
 {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *cacheKey = ISCacheKeyMake(key);
     NSString *path = [self pathForCacheKey:cacheKey];
     
@@ -138,6 +157,7 @@ static NSString *ISCacheKeyMake(id <NSCoding> key)
     NSMutableArray *keys = [self.existingKeys mutableCopy];
     [keys removeObject:cacheKey];
     self.existingKeys = [keys copy];
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 @end
