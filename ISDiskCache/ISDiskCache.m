@@ -65,6 +65,21 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 #pragma mark -
 
+- (void)removeDirectoryIfEmpty:(NSString *)directoryPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return ![(NSString *)evaluatedObject hasPrefix:@"."];
+    }];
+    
+    if (![[[fileManager subpathsAtPath:directoryPath] filteredArrayUsingPredicate:predicate] count] ) {
+        NSError *error = nil;
+        if (![fileManager removeItemAtPath:directoryPath error:&error]) {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
+    }
+}
+
 - (void)removeObjectsByModificationDate:(NSDate *)borderDate
 {
     [self removeObjectsUsingBlock:^BOOL(NSString *filePath) {
@@ -97,6 +112,9 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
                 if (![fileManager removeItemAtPath:filePath error:&error]) {
                     [NSException raise:ISDiskCacheException format:@"%@", error];
                 }
+                
+                NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
+                [self removeDirectoryIfEmpty:directoryPath];
             }
         }
     }
@@ -185,18 +203,21 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (void)removeObjectForKey:(id)key
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    NSString *path = [self filePathForKey:key];
+    NSString *filePath = [self filePathForKey:key];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:path isDirectory:NULL]) {
+    if ([fileManager fileExistsAtPath:filePath isDirectory:NULL]) {
         NSError *error = nil;
-        if (![fileManager removeItemAtPath:path error:&error]) {
+        if (![fileManager removeItemAtPath:filePath error:&error]) {
             [NSException raise:NSInvalidArgumentException format:@"%@", error];
         }
     }
     
+    NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
+    [self removeDirectoryIfEmpty:directoryPath];
+    
     NSMutableArray *keys = [self.existingFilePaths mutableCopy];
-    [keys removeObject:path];
+    [keys removeObject:filePath];
     self.existingFilePaths = [keys copy];
     dispatch_semaphore_signal(self.semaphore);
 }

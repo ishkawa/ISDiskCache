@@ -22,6 +22,10 @@
 
 - (void)tearDown
 {
+    [cache removeObjectsUsingBlock:^BOOL(NSString *filePath) {
+        return YES;
+    }];
+    
     cache = nil;
     key = nil;
     value = nil;
@@ -77,6 +81,15 @@
     
     [cache removeObjectsByModificationDate:[NSDate date]];
     STAssertNil([cache objectForKey:key], @"should remove object.");
+}
+
+- (void)testRemoveParentDirectoryIfSiblingsDoesNotExist
+{
+    NSString *directoryPath = [[cache filePathForKey:key] stringByDeletingLastPathComponent];
+    [cache setObject:value forKey:key];
+    [cache removeObjectForKey:key];
+    
+    STAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:directoryPath], @"did not remove parect directory.");
 }
 
 @end
