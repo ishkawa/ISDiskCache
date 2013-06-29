@@ -20,7 +20,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 {
     self = [super init];
     if (self) {
-        _existingFilePaths = @[];
+        _existingFilePaths = [self validFilePathsUnderPath:self.rootPath];
         _semaphore = dispatch_semaphore_create(1);
     }
     return self;
@@ -63,6 +63,27 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     return [directoryPath stringByAppendingPathComponent:cacheKey];
 }
 
+- (NSArray *)validFilePathsUnderPath:(NSString *)parentPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableArray *paths = [@[] mutableCopy];
+    for (NSString *subpath in [fileManager subpathsAtPath:parentPath]) {
+        NSString *path = [parentPath stringByAppendingPathComponent:subpath];
+        [paths addObject:path];
+    }
+    
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        NSString *path = (NSString *)evaluatedObject;
+        BOOL isHidden = [[path lastPathComponent] hasPrefix:@"."];
+        BOOL isDirectory;
+        if (![fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
+            return NO;
+        }
+        return !isHidden && !isDirectory;
+    }];
+    return [paths filteredArrayUsingPredicate:predicate];
+}
+
 #pragma mark -
 
 - (void)removeDirectoryIfEmpty:(NSString *)directoryPath
@@ -72,11 +93,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
         return;
     }
         
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return ![(NSString *)evaluatedObject hasPrefix:@"."];
-    }];
-    
-    if (![[[fileManager subpathsAtPath:directoryPath] filteredArrayUsingPredicate:predicate] count] ) {
+    if (![[self validFilePathsUnderPath:directoryPath] count]) {
         NSError *error = nil;
         if (![fileManager removeItemAtPath:directoryPath error:&error]) {
             [NSException raise:ISDiskCacheException format:@"%@", error];

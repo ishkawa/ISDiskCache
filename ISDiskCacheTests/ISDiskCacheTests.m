@@ -106,4 +106,14 @@
     [queue waitUntilAllOperationsAreFinished];
 }
 
+- (void)testBuildingExistingFilePathsAtInit
+{
+    [cache setObject:value forKey:key];
+    
+    NSString *filePath = [cache filePathForKey:key];
+    ISDiskCache *newCache = [[ISDiskCache alloc] init];
+
+    STAssertTrue([newCache.existingFilePaths containsObject:filePath], @"");
+}
+
 @end
