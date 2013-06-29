@@ -68,6 +68,10 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (void)removeDirectoryIfEmpty:(NSString *)directoryPath
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:directoryPath]) {
+        return;
+    }
+        
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return ![(NSString *)evaluatedObject hasPrefix:@"."];
     }];
