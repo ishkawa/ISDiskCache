@@ -29,11 +29,19 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testSetObject
 {
     [cache setObject:value forKey:key];
     
-    STAssertEqualObjects([cache objectForKey:key], value, nil);
+    STAssertEqualObjects([cache objectForKey:key], value, @"object did not match set object.");
+}
+
+- (void)testRemoveObject
+{
+    [cache setObject:value forKey:key];
+    [cache removeObjectForKey:key];
+    
+    STAssertNil([cache objectForKey:key], @"object for removed key should be nil.");
 }
 
 @end
