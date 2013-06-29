@@ -1,7 +1,8 @@
 #import "ISDiskCache.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-static NSString *ISCacheKeyMake(id <NSCoding> key)
+static NSString *const ISDiskCacheException = @"ISDiskCacheException";
+NSString *ISCacheKeyMake(id <NSCoding> key)
 {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:key];
 	if ([data length] == 0) {
@@ -120,7 +121,21 @@ static NSString *ISCacheKeyMake(id <NSCoding> key)
         return nil;
     }
     
-    NSData *data = [NSData dataWithContentsOfFile:[self pathForCacheKey:cacheKey]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *path = [self pathForCacheKey:cacheKey];
+    NSError *getAttributesError = nil;
+    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
+    if (getAttributesError) {
+        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    }
+    [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
+    
+    NSError *setAttributesError = nil;
+    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&setAttributesError]) {
+        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    }
+    
+    NSData *data = [NSData dataWithContentsOfFile:path];
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 

@@ -44,4 +44,21 @@
     STAssertNil([cache objectForKey:key], @"object for removed key should be nil.");
 }
 
+- (void)testUpdateModificationDateOnAccessing
+{
+    [cache setObject:value forKey:key];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];
+    [cache objectForKey:key];
+    
+    NSDate *accessedDate = [NSDate date];
+    NSString *cacheKey = ISCacheKeyMake(key);
+    NSString *path = [cache pathForCacheKey:cacheKey];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *getAttributesError = nil;
+    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
+    NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
+    
+    STAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0, nil);
+}
+
 @end
