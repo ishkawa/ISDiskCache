@@ -86,13 +86,15 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 #pragma mark - key
 
+- (BOOL)hasObjectForKey:(id<NSCoding>)key
+{
+    NSString *path = [self filePathForKey:key];
+    return [self.filePaths containsObject:path];
+}
+
 - (id)objectForKey:(id <NSCoding>)key
 {
     NSString *path = [self filePathForKey:key];
-    if (![self.filePaths containsObject:path]) {
-        return nil;
-    }
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
         return nil;

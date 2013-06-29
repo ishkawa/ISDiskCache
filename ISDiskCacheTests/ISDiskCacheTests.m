@@ -40,6 +40,13 @@
     STAssertEqualObjects([cache objectForKey:key], value, @"object did not match set object.");
 }
 
+- (void)testHasObjectForKey
+{
+    STAssertFalse([cache hasObjectForKey:key], @"returned YES before setting object.");
+    [cache setObject:value forKey:key];
+    STAssertTrue([cache hasObjectForKey:key], @"returned NO after setting object.");
+}
+
 - (void)testRemoveObjectForKey
 {
     [cache setObject:value forKey:key];

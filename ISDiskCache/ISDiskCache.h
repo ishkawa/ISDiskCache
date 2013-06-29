@@ -9,6 +9,7 @@
 
 - (NSString *)filePathForKey:(id <NSCoding>)key;
 
+- (BOOL)hasObjectForKey:(id <NSCoding>)key;
 - (id)objectForKey:(id <NSCoding>)key;
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
 
