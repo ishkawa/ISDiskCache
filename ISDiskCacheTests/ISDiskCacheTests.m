@@ -92,7 +92,7 @@
     STAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:directoryPath], @"did not remove parect directory.");
 }
 
-- (void)testWriteFromMultipThreads
+- (void)testWriteFromMultipleThreads
 {
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     for (NSInteger index = 0; index < 1000; index++) {
