@@ -14,7 +14,7 @@
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
 
 - (void)removeObjectForKey:(id <NSCoding>)key;
-- (void)removeObjectsByAccessedDate:(NSDate *)modificationDate;
+- (void)removeObjectsByAccessedDate:(NSDate *)accessedDate;
 - (void)removeObjectsUsingBlock:(BOOL (^)(NSString *filePath))block;
 
 @end
