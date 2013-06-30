@@ -28,11 +28,15 @@ LRU disk cache for iOS.
 
 ### Removing old files
 
-remove object which is not retained by any other objects.
+remove files whose accessed date is older than argument.
 
 ```objectivec
 [[ISDiskCache sharedCache] removeObjectsByAccessedDate:[NSDate dateWithTimeIntervalSinceNow:-10000.0]];
 ```
+
+This method uses `NSFileModificationDate` internally.  
+`NSFileModificationDate` is updated in each `objectForKey:`,
+so modification date equals to accessed date.
 
 ## Installing
 
