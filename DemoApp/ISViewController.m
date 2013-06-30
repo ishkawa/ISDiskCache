@@ -7,6 +7,7 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
+        [ISDiskCache sharedCache].limitOfSize = 100000;
         NSMutableArray *indexes = [@[] mutableCopy];
         for (NSInteger index = 0; index < 100; index++) {
             [indexes addObject:@(index)];

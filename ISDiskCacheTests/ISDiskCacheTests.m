@@ -118,16 +118,6 @@
     [queue waitUntilAllOperationsAreFinished];
 }
 
-- (void)testBuildingExistingFilePathsAtInit
-{
-    [cache setObject:value forKey:key];
-    
-    NSString *filePath = [cache filePathForKey:key];
-    ISDiskCache *newCache = [[ISDiskCache alloc] init];
-
-    STAssertTrue([newCache.filePaths containsObject:filePath], @"");
-}
-
 - (void)testLimit
 {
     NSInteger count = 5;
