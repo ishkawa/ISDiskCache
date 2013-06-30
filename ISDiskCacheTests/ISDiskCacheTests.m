@@ -118,14 +118,19 @@
     [queue waitUntilAllOperationsAreFinished];
 }
 
-- (void)testBuildingExistingFilePathsAtInit
+- (void)testLimit
 {
-    [cache setObject:value forKey:key];
+    NSInteger count = 5;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+    cache.limitOfSize = [data length] * count;
     
-    NSString *filePath = [cache filePathForKey:key];
-    ISDiskCache *newCache = [[ISDiskCache alloc] init];
-
-    STAssertTrue([newCache.filePaths containsObject:filePath], @"");
+    for (NSInteger index = 0; index < count; index++) {
+        [cache setObject:value forKey:@(index)];
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+    }
+    
+    STAssertNil([cache objectForKey:@1], nil);
+    STAssertNotNil([cache objectForKey:@(count - 1)], nil);
 }
 
 @end

@@ -5,7 +5,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 @interface ISDiskCache ()
 
-@property (nonatomic, strong) NSArray *filePaths;
+@property (nonatomic, readonly) NSOperationQueue *calculationQueue;
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 #else
@@ -30,8 +30,11 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 {
     self = [super init];
     if (self) {
-        _filePaths = [self validFilePathsUnderPath:self.rootPath];
+        _calculationQueue = [[NSOperationQueue alloc] init];
         _semaphore = dispatch_semaphore_create(1);
+        _limitOfSize = 10 * 1024 * 1024; // 10MB
+        
+        [self performSelectorInBackground:@selector(calculateCurrentSize) withObject:nil];
     }
     return self;
 }
@@ -86,11 +89,10 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
         NSString *path = (NSString *)evaluatedObject;
         BOOL isHidden = [[path lastPathComponent] hasPrefix:@"."];
         BOOL isDirectory;
-        if (![fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
-            return NO;
-        }
-        return !isHidden && !isDirectory;
+        BOOL exists = [fileManager fileExistsAtPath:path isDirectory:&isDirectory];
+        return !isHidden && !isDirectory && exists;
     }];
+    
     return [paths filteredArrayUsingPredicate:predicate];
 }
 
@@ -99,27 +101,23 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (BOOL)hasObjectForKey:(id<NSCoding>)key
 {
     NSString *path = [self filePathForKey:key];
-    return [self.filePaths containsObject:path];
+    return [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL];
 }
 
 - (id)objectForKey:(id <NSCoding>)key
 {
-    NSString *path = [self filePathForKey:key];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
+    if (![self hasObjectForKey:key]) {
         return nil;
     }
     
-    NSError *getAttributesError = nil;
-    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
-    if (getAttributesError) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
-    }
+    NSString *path = [self filePathForKey:key];
+    NSMutableDictionary *attributes = [[self attributesForFilePath:path] mutableCopy];
     [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
     
-    NSError *setAttributesError = nil;
-    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&setAttributesError]) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&error]) {
+        [NSException raise:ISDiskCacheException format:@"%@", error];
     }
     
     NSData *data = [NSData dataWithContentsOfFile:path];
@@ -131,22 +129,17 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *path = [self filePathForKey:key];
     NSString *directoryPath = [path stringByDeletingLastPathComponent];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:directoryPath isDirectory:NULL]) {
         NSError *error = nil;
-        if (![fileManager createDirectoryAtPath:directoryPath
-                    withIntermediateDirectories:YES
-                                     attributes:nil
-                                          error:&error]) {
+        if (![fileManager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             [NSException raise:ISDiskCacheException format:@"%@", error];
         }
     }
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     [data writeToFile:path atomically:YES];
-    
-    self.filePaths = [self.filePaths arrayByAddingObject:path];
+    [self calculateCurrentSize];
     dispatch_semaphore_signal(self.semaphore);
 }
 
@@ -154,7 +147,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *filePath = [self filePathForKey:key];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:filePath isDirectory:NULL]) {
         NSError *error = nil;
@@ -165,10 +157,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     
     NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
     [self removeDirectoryIfEmpty:directoryPath];
-    
-    NSMutableArray *keys = [self.filePaths mutableCopy];
-    [keys removeObject:filePath];
-    self.filePaths = [keys copy];
     dispatch_semaphore_signal(self.semaphore);
 }
 
@@ -192,13 +180,7 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (void)removeObjectsByAccessedDate:(NSDate *)borderDate
 {
     [self removeObjectsUsingBlock:^BOOL(NSString *filePath) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSError *error = nil;
-        NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:filePath error:&error] mutableCopy];
-        if (error) {
-            [NSException raise:ISDiskCacheException format:@"%@", error];
-        }
-        
+        NSDictionary *attributes = [self attributesForFilePath:filePath];
         NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
         return [modificationDate timeIntervalSinceDate:borderDate] < 0.0;
     }];
@@ -224,14 +206,73 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
                 
                 NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
                 [self removeDirectoryIfEmpty:directoryPath];
-                
-                NSMutableArray *filePaths = [self.filePaths mutableCopy];
-                [filePaths removeObject:filePath];
-                _filePaths = [filePaths copy];
             }
         }
     }
     dispatch_semaphore_signal(self.semaphore);
+}
+
+- (void)removeOldObjects
+{
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    static NSString *ISDiskCacheFilePathKey = @"ISDiskCacheFilePathKey";
+    
+    NSMutableArray *attributesArray = [@[] mutableCopy];
+    for (NSString *filePath in [self validFilePathsUnderPath:self.rootPath]) {
+        NSMutableDictionary *attributes = [[self attributesForFilePath:filePath] mutableCopy];
+        [attributes setObject:filePath forKey:ISDiskCacheFilePathKey];
+        [attributesArray addObject:attributes];
+    }
+    
+    [attributesArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDate *date1 = [obj1 objectForKey:NSFileModificationDate];
+        NSDate *date2 = [obj2 objectForKey:NSFileModificationDate];
+        return [date2 compare:date1];
+    }];
+    
+    NSInteger sum = 0;
+    for (NSDictionary *attributes in [attributesArray copy]) {
+        sum += [[attributes objectForKey:NSFileSize] integerValue];
+        if (sum >= self.limitOfSize / 2) {
+            break;
+        }
+        [attributesArray removeObject:attributes];
+    }
+    dispatch_semaphore_signal(self.semaphore);
+    
+    NSArray *filePathsToRemove = [attributesArray valueForKey:ISDiskCacheFilePathKey];
+    [self removeObjectsUsingBlock:^BOOL(NSString *filePath) {
+        return [filePathsToRemove containsObject:filePath];
+    }];
+}
+
+- (NSDictionary *)attributesForFilePath:(NSString *)filePath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:filePath error:&error] mutableCopy];
+    if (error) {
+        [NSException raise:ISDiskCacheException format:@"%@", error];
+    }
+    return attributes;
+}
+
+- (void)calculateCurrentSize
+{
+    [self.calculationQueue cancelAllOperations];
+    [self.calculationQueue addOperationWithBlock:^{
+        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        NSInteger sum = 0;
+        for (NSString *filePath in [self validFilePathsUnderPath:self.rootPath]) {
+            NSDictionary *attributes = [self attributesForFilePath:filePath];
+            sum += [[attributes objectForKey:NSFileSize] integerValue];
+        }
+        dispatch_semaphore_signal(self.semaphore);
+        
+        if (sum >= self.limitOfSize) {
+            [self removeOldObjects];
+        }
+    }];
 }
 
 @end
