@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'ISDiskCache' target in the 'ISDiskCache' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
