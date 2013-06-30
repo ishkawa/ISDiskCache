@@ -10,20 +10,20 @@ LRU disk cache for iOS.
 ## Features
 
 - deletes files by accessed date (LRU).
-- accepts any type of object which conforms to NSCoding for key and value.
+- accepts any type of object for key and value as long as it conforms to `NSCoding`.
 
 ## Usage
 
 ### Saving object to file
 
 ```objectivec
-[[ISDiskCache sharedCache] setObject:object forKey:@"key"];
+[[ISDiskCache sharedCache] setObject:object forKey:@"http://example.com"];
 ```
 
 ### Loading object from file
 
 ```objectivec
-[[ISDiskCache sharedCache] objectForKey:@"key"];
+[[ISDiskCache sharedCache] objectForKey:@"http://example.com"];
 ```
 
 ### Removing old files
@@ -48,6 +48,8 @@ pod 'ISDiskCache', :git => 'https://github.com/ishkawa/ISDiskCache.git'
 
 ## Note
 
+### Synchronicity
+
 You should pay attetion to that `ISDiskCache` works synchronously.
 If you call APIs on main thread, it will causes blocking user interaction.
 To avoid this, you should call APIs of `ISDiskCache` asynchronously.
@@ -66,6 +68,40 @@ dispatch_async(queue, ^{
 ```
 
 See `ISViewController` of demo app for more example.
+
+### Using ISMemoryCache together
+
+If you want to use fast cache together, use [ISMemoryCache](https://github.com/ishkawa/ISMemoryCache).
+
+```objectivec
+UIImageView *imageView;
+NSURL *URL = [NSURL URLWithString:@"http://example.com"];
+
+imageView.image = [[ISMemoryCache sharedCache] objectForKey:URL];
+if (imageView.image == nil && [[ISDiskCache sharedCache] hasObjectForKey:URL]) {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        UIImage *image = [diskCache objectForKey:URL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.imageView.image = image;
+        });
+    });
+}
+```
+
+### Algorithm in generating file path from key
+
+`ISDiskCache` uses MD5 hash to obtain file path from key.
+
+```objectivec
+NSData *data = [NSKeyedArchiver archivedDataWithRootObject:key];
+unsigned char result[16];
+CC_MD5([data bytes], [data length], result);
+NSString *fileName = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+        result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
+        result[8], result[9], result[10], result[11],result[12], result[13], result[14], result[15]];
+```
 
 ## License
 
