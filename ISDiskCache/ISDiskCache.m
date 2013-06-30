@@ -89,11 +89,10 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
         NSString *path = (NSString *)evaluatedObject;
         BOOL isHidden = [[path lastPathComponent] hasPrefix:@"."];
         BOOL isDirectory;
-        if (![fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
-            return NO;
-        }
-        return !isHidden && !isDirectory;
+        BOOL exists = [fileManager fileExistsAtPath:path isDirectory:&isDirectory];
+        return !isHidden && !isDirectory && exists;
     }];
+    
     return [paths filteredArrayUsingPredicate:predicate];
 }
 
@@ -101,21 +100,20 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 - (BOOL)hasObjectForKey:(id<NSCoding>)key
 {
-    NSString *path = [self filePathForKey:key];
-    return [self.filePaths containsObject:path];
+    return [self.filePaths containsObject:[self filePathForKey:key]];
 }
 
 - (id)objectForKey:(id <NSCoding>)key
 {
     NSString *path = [self filePathForKey:key];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:path isDirectory:NULL]) {
+    if (![self.filePaths containsObject:path]) {
         return nil;
     }
     
     NSMutableDictionary *attributes = [[self attributesForFilePath:path] mutableCopy];
     [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
     
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&error]) {
         [NSException raise:ISDiskCacheException format:@"%@", error];
@@ -128,16 +126,13 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    
     NSString *path = [self filePathForKey:key];
     NSString *directoryPath = [path stringByDeletingLastPathComponent];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:directoryPath isDirectory:NULL]) {
         NSError *error = nil;
-        if (![fileManager createDirectoryAtPath:directoryPath
-                    withIntermediateDirectories:YES
-                                     attributes:nil
-                                          error:&error]) {
+        if (![fileManager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             [NSException raise:ISDiskCacheException format:@"%@", error];
         }
     }
