@@ -13,6 +13,8 @@
         }
         self.array = [indexes copy];
         self.operationQueue = [[NSOperationQueue alloc] init];
+        self.networkingEnabled = YES;
+        self.cacheEnabled = YES;
         
         self.title = @"ISDiskCache";
         self.navigationItem.rightBarButtonItem =
