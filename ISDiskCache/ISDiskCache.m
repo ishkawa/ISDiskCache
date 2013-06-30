@@ -16,6 +16,16 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 @implementation ISDiskCache
 
++ (instancetype)sharedCache
+{
+    static ISDiskCache *cache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [[ISDiskCache alloc] init];
+    });
+    return cache;
+}
+
 - (id)init
 {
     self = [super init];

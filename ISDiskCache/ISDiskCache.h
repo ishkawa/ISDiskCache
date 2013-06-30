@@ -7,6 +7,8 @@
 @property (nonatomic, readonly) NSString *rootPath;
 @property (nonatomic, readonly) NSArray *filePaths;
 
++ (instancetype)sharedCache;
+
 - (NSString *)filePathForKey:(id <NSCoding>)key;
 
 - (BOOL)hasObjectForKey:(id <NSCoding>)key;

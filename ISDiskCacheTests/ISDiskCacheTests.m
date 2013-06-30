@@ -33,6 +33,11 @@
     [super tearDown];
 }
 
+- (void)testSharedInstance
+{
+    STAssertEqualObjects([ISDiskCache sharedCache], [ISDiskCache sharedCache], @"shared instance does not match.");
+}
+
 - (void)testSetObjectForKey
 {
     [cache setObject:value forKey:key];
