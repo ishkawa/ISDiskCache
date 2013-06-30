@@ -113,16 +113,12 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
         return nil;
     }
     
-    NSError *getAttributesError = nil;
-    NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:path error:&getAttributesError] mutableCopy];
-    if (getAttributesError) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
-    }
+    NSMutableDictionary *attributes = [[self attributesForFilePath:path] mutableCopy];
     [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
     
-    NSError *setAttributesError = nil;
-    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&setAttributesError]) {
-        [NSException raise:ISDiskCacheException format:@"%@", getAttributesError];
+    NSError *error = nil;
+    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&error]) {
+        [NSException raise:ISDiskCacheException format:@"%@", error];
     }
     
     NSData *data = [NSData dataWithContentsOfFile:path];
