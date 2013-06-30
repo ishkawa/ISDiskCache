@@ -224,6 +224,10 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
                 
                 NSString *directoryPath = [filePath stringByDeletingLastPathComponent];
                 [self removeDirectoryIfEmpty:directoryPath];
+                
+                NSMutableArray *filePaths = [self.filePaths mutableCopy];
+                [filePaths removeObject:filePath];
+                _filePaths = [filePaths copy];
             }
         }
     }

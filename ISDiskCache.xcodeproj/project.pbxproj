@@ -11,12 +11,10 @@
 		7F77E9B7177E7243005BBE22 /* ISDiskCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F77E9B6177E7243005BBE22 /* ISDiskCache.h */; };
 		7F77E9B9177E7243005BBE22 /* ISDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F77E9B8177E7243005BBE22 /* ISDiskCache.m */; };
 		7F77E9C1177E7243005BBE22 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */; };
-		7F77E9C3177E7243005BBE22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9C2177E7243005BBE22 /* UIKit.framework */; };
 		7F77E9C4177E7243005BBE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
 		7F77E9C7177E7243005BBE22 /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
 		7F77E9CD177E7243005BBE22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F77E9CB177E7243005BBE22 /* InfoPlist.strings */; };
 		7F77E9D0177E7243005BBE22 /* ISDiskCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F77E9CF177E7243005BBE22 /* ISDiskCacheTests.m */; };
-		7F959A7D177FA7650082C3CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9C2177E7243005BBE22 /* UIKit.framework */; };
 		7F959A7E177FA7650082C3CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
 		7F959A80177FA7650082C3CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F959A7F177FA7650082C3CF /* CoreGraphics.framework */; };
 		7F959A86177FA7650082C3CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F959A84177FA7650082C3CF /* InfoPlist.strings */; };
@@ -28,10 +26,19 @@
 		7F959A98177FA7850082C3CF /* ISViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F959A97177FA7850082C3CF /* ISViewController.m */; };
 		7FBE90EE177FABA400352BE7 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBE90EC177FABA400352BE7 /* placeholder.png */; };
 		7FBE90EF177FABA400352BE7 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBE90ED177FABA400352BE7 /* placeholder@2x.png */; };
+		7FBE90F2177FAE5A00352BE7 /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
+		7FBE90F4177FAE6300352BE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBE90F3177FAE6300352BE7 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		7F77E9C5177E7243005BBE22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F77E9A6177E7243005BBE22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F77E9AD177E7243005BBE22;
+			remoteInfo = ISDiskCache;
+		};
+		7FBE90F0177FAE5600352BE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F77E9A6177E7243005BBE22 /* Project object */;
 			proxyType = 1;
@@ -61,7 +68,6 @@
 		7F77E9B8177E7243005BBE22 /* ISDiskCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISDiskCache.m; sourceTree = "<group>"; };
 		7F77E9BF177E7243005BBE22 /* ISDiskCacheTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISDiskCacheTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		7F77E9C2177E7243005BBE22 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7F77E9CA177E7243005BBE22 /* ISDiskCacheTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISDiskCacheTests-Info.plist"; sourceTree = "<group>"; };
 		7F77E9CC177E7243005BBE22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7F77E9CF177E7243005BBE22 /* ISDiskCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISDiskCacheTests.m; sourceTree = "<group>"; };
@@ -80,6 +86,7 @@
 		7F959A97177FA7850082C3CF /* ISViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISViewController.m; sourceTree = "<group>"; };
 		7FBE90EC177FABA400352BE7 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		7FBE90ED177FABA400352BE7 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
+		7FBE90F3177FAE6300352BE7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +103,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F77E9C1177E7243005BBE22 /* SenTestingKit.framework in Frameworks */,
-				7F77E9C3177E7243005BBE22 /* UIKit.framework in Frameworks */,
 				7F77E9C4177E7243005BBE22 /* Foundation.framework in Frameworks */,
 				7F77E9C7177E7243005BBE22 /* libISDiskCache.a in Frameworks */,
 			);
@@ -106,7 +112,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F959A7D177FA7650082C3CF /* UIKit.framework in Frameworks */,
+				7FBE90F4177FAE6300352BE7 /* UIKit.framework in Frameworks */,
+				7FBE90F2177FAE5A00352BE7 /* libISDiskCache.a in Frameworks */,
 				7F959A7E177FA7650082C3CF /* Foundation.framework in Frameworks */,
 				7F959A80177FA7650082C3CF /* CoreGraphics.framework in Frameworks */,
 			);
@@ -139,9 +146,9 @@
 		7F77E9B0177E7243005BBE22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FBE90F3177FAE6300352BE7 /* UIKit.framework */,
 				7F77E9B1177E7243005BBE22 /* Foundation.framework */,
 				7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */,
-				7F77E9C2177E7243005BBE22 /* UIKit.framework */,
 				7F959A7F177FA7650082C3CF /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
@@ -261,6 +268,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7FBE90F1177FAE5600352BE7 /* PBXTargetDependency */,
 			);
 			name = DemoApp;
 			productName = DemoApp;
@@ -369,6 +377,11 @@
 			isa = PBXTargetDependency;
 			target = 7F77E9AD177E7243005BBE22 /* ISDiskCache */;
 			targetProxy = 7F77E9C5177E7243005BBE22 /* PBXContainerItemProxy */;
+		};
+		7FBE90F1177FAE5600352BE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F77E9AD177E7243005BBE22 /* ISDiskCache */;
+			targetProxy = 7FBE90F0177FAE5600352BE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -509,6 +522,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -525,6 +539,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
