@@ -128,4 +128,19 @@
     STAssertTrue([newCache.filePaths containsObject:filePath], @"");
 }
 
+- (void)testLimit
+{
+    NSInteger count = 5;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+    cache.limitOfSize = [data length] * count;
+    
+    for (NSInteger index = 0; index < count; index++) {
+        [cache setObject:value forKey:@(index)];
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+    }
+    
+    STAssertNil([cache objectForKey:@1], nil);
+    STAssertNotNil([cache objectForKey:@(count - 1)], nil);
+}
+
 @end
