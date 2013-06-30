@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "ISDiskCache"
-  s.version      = "0.0.1"
+  s.version      = "0.1.0"
   s.platform     = :ios, '4.3'
   s.summary      = "LRU disk cache for iOS."
   s.homepage     = "https://github.com/ishkawa/ISDiskCache"
   s.author       = { "Yosuke Ishikawa" => "y@ishkawa.org" }
-  s.source       = { :git => "https://github.com/ishkawa/ISDiskCache.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/ishkawa/ISDiskCache.git", :tag => "0.1.0" }
   s.source_files = 'ISDiskCache/**/*.{h,m}'
   s.requires_arc = true
   s.license      = {
