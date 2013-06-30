@@ -22,8 +22,24 @@
                                          style:UIBarButtonItemStyleBordered
                                         target:self
                                         action:@selector(clearDiskCache)];
+        
+        [self.operationQueue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
     }
     return self;
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.operationQueue && [keyPath isEqualToString:@"operationCount"]) {
+        NSInteger count = [self.operationQueue operationCount];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = count > 0;
+        });
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark -
