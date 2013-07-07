@@ -1,7 +1,4 @@
-[![Build Status](https://travis-ci.org/ishkawa/ISDiskCache.png)](https://travis-ci.org/ishkawa/ISDiskCache)
-[![Coverage Status](https://coveralls.io/repos/ishkawa/ISDiskCache/badge.png?branch=master)](https://coveralls.io/r/ishkawa/ISDiskCache?branch=master)
-
-# ISDiskCache
+# ISDiskCache [![Build Status](https://travis-ci.org/ishkawa/ISDiskCache.png)](https://travis-ci.org/ishkawa/ISDiskCache) [![Coverage Status](https://coveralls.io/repos/ishkawa/ISDiskCache/badge.png?branch=master)](https://coveralls.io/r/ishkawa/ISDiskCache?branch=master)
 
 LRU disk cache for iOS.
 
