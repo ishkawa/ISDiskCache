@@ -69,7 +69,7 @@ dispatch_async(queue, ^{
 });
 ```
 
-See `ISViewController` of demo app for more example.
+See `ISViewController` in demo app for example.
 
 ### Using ISMemoryCache together
 
