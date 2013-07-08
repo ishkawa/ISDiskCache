@@ -267,7 +267,6 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
             NSDictionary *attributes = [self attributesForFilePath:filePath];
             sum += [[attributes objectForKey:NSFileSize] integerValue];
         }
-        NSLog(@"%d", sum);
         dispatch_semaphore_signal(self.semaphore);
         
         if (sum >= self.limitOfSize) {

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ishkawa/ISDiskCache.png)](https://travis-ci.org/ishkawa/ISDiskCache)
+# ISDiskCache [![Build Status](https://travis-ci.org/ishkawa/ISDiskCache.png)](https://travis-ci.org/ishkawa/ISDiskCache) [![Coverage Status](https://coveralls.io/repos/ishkawa/ISDiskCache/badge.png?branch=master)](https://coveralls.io/r/ishkawa/ISDiskCache?branch=master)
 
 LRU disk cache for iOS.
 
@@ -9,7 +9,7 @@ LRU disk cache for iOS.
 
 ## Features
 
-- deletes files by accessed date (LRU).
+- deletes old files automatically using accessed date.
 - accepts any type of object for key and value as long as it conforms to `NSCoding`.
 
 ## Usage
@@ -26,17 +26,15 @@ LRU disk cache for iOS.
 [[ISDiskCache sharedCache] objectForKey:@"http://example.com"];
 ```
 
-### Removing old files
-
-remove files whose accessed date is older than argument.
+### Set limit of size
 
 ```objectivec
-[[ISDiskCache sharedCache] removeObjectsByAccessedDate:[NSDate dateWithTimeIntervalSinceNow:-10000.0]];
+[ISDiskCache sharedCache].limitOfSize = 10 * 1024 * 1024; // 10MB
 ```
 
-This method uses `NSFileModificationDate` internally.  
-`NSFileModificationDate` is updated in each `objectForKey:`,
-so modification date equals to accessed date.
+When total size of disk cache is over limit of size, `ISDiskCache` calls `removeOldObjects` automatically.
+This method sorts files by `NSFileModificationDate` and remove files from oldest file.
+`NSFileModificationDate` is updated in each `objectForKey:`, so modification date equals to accessed date.
 
 ## Installing
 
