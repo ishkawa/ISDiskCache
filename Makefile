@@ -9,6 +9,5 @@ test:
 		GCC_GENERATE_TEST_COVERAGE_FILES=YES
 
 coveralls:
-	find ./ -name "*Tests.gcno" | xargs rm
-	coveralls
+	coveralls -e ISDiskCacheTests
 
