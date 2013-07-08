@@ -45,7 +45,7 @@ Add `ISDiskCache/ISDiskCache.{h,m}` to your Xcode project.
 If you use CocoaPods, you can install ISDiskCache by inserting config below.
 
 ```
-pod 'ISDiskCache', :git => 'https://github.com/ishkawa/ISDiskCache.git'
+pod 'ISDiskCache', '~> 0.1.0'
 ```
 
 ## Note
