@@ -38,6 +38,8 @@
     STAssertEqualObjects([ISDiskCache sharedCache], [ISDiskCache sharedCache], @"shared instance does not match.");
 }
 
+#pragma mark - basic operations for key
+
 - (void)testSetObjectForKey
 {
     [cache setObject:value forKey:key];
@@ -60,6 +62,9 @@
     STAssertNil([cache objectForKey:key], @"object for removed key should be nil.");
 }
 
+
+#pragma mark - update accessed date
+
 - (void)testUpdateModificationDateOnAccessing
 {
     [cache setObject:value forKey:key];
@@ -74,6 +79,9 @@
     
     STAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0, nil);
 }
+
+
+#pragma mark - remove files
 
 - (void)testRemoveObjectsUsingBlock
 {
@@ -104,19 +112,8 @@
     STAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:directoryPath], @"did not remove parect directory.");
 }
 
-- (void)testWriteFromMultipleThreads
-{
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    for (NSInteger index = 0; index < 1000; index++) {
-        [queue addOperationWithBlock:^{
-            [cache setObject:value forKey:key];
-        }];
-        [queue addOperationWithBlock:^{
-            [cache removeObjectForKey:key];
-        }];
-    }
-    [queue waitUntilAllOperationsAreFinished];
-}
+
+#pragma mark - automatic removing
 
 - (void)testLimit
 {
@@ -131,6 +128,23 @@
     
     STAssertNil([cache objectForKey:@1], nil);
     STAssertNotNil([cache objectForKey:@(count - 1)], nil);
+}
+
+
+#pragma mark - thread safety 
+
+- (void)testWriteFromMultipleThreads
+{
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    for (NSInteger index = 0; index < 1000; index++) {
+        [queue addOperationWithBlock:^{
+            [cache setObject:value forKey:key];
+        }];
+        [queue addOperationWithBlock:^{
+            [cache removeObjectForKey:key];
+        }];
+    }
+    [queue waitUntilAllOperationsAreFinished];
 }
 
 @end
