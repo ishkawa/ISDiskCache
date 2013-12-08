@@ -100,8 +100,11 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
 
 - (BOOL)hasObjectForKey:(id<NSCoding>)key
 {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *path = [self filePathForKey:key];
-    return [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL];
+    BOOL hasObject = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL];
+    dispatch_semaphore_signal(self.semaphore);
+    return hasObject;
 }
 
 - (id)objectForKey:(id <NSCoding>)key
@@ -110,18 +113,24 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
         return nil;
     }
     
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     NSString *path = [self filePathForKey:key];
     NSMutableDictionary *attributes = [[self attributesForFilePath:path] mutableCopy];
-    [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error = nil;
-    if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&error]) {
-        [NSException raise:ISDiskCacheException format:@"%@", error];
+    if (attributes) {
+        [attributes setObject:[NSDate date] forKey:NSFileModificationDate];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error = nil;
+        if (![fileManager setAttributes:[attributes copy] ofItemAtPath:path error:&error]) {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
     }
     
     NSData *data = [NSData dataWithContentsOfFile:path];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    id object = data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
+    dispatch_semaphore_signal(self.semaphore);
+    
+    return object;
 }
 
 - (void)setObject:(id <NSCoding>)object forKey:(id <NSCoding>)key;
@@ -252,7 +261,11 @@ static NSString *const ISDiskCacheException = @"ISDiskCacheException";
     NSError *error = nil;
     NSMutableDictionary *attributes = [[fileManager attributesOfItemAtPath:filePath error:&error] mutableCopy];
     if (error) {
-        [NSException raise:ISDiskCacheException format:@"%@", error];
+        if (error.code == NSFileReadNoSuchFileError) {
+            return nil;
+        } else {
+            [NSException raise:ISDiskCacheException format:@"%@", error];
+        }
     }
     return attributes;
 }

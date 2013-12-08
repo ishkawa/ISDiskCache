@@ -1,13 +1,9 @@
 test:
-	xcodebuild \
+	xcodebuild clean test\
 		-sdk iphonesimulator \
-		-target ISDiskCacheTests \
+		-scheme ISDiskCache \
 		-configuration Debug \
-		clean build \
-		TEST_AFTER_BUILD=YES \
+		-destination "name=iPhone Retina (3.5-inch),OS=7.0" \
 		GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES \
 		GCC_GENERATE_TEST_COVERAGE_FILES=YES
-
-coveralls:
-	coveralls -e ISDiskCacheTests
 
