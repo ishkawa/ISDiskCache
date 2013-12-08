@@ -141,6 +141,9 @@
             [cache setObject:value forKey:key];
         }];
         [queue addOperationWithBlock:^{
+            [cache objectForKey:key];
+        }];
+        [queue addOperationWithBlock:^{
             [cache removeObjectForKey:key];
         }];
     }
