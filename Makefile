@@ -10,5 +10,5 @@ test:
 		GCC_GENERATE_TEST_COVERAGE_FILES=YES
 
 coveralls:
-	coveralls -e UnitTests -e DemoApp
+	coveralls -e UnitTests -e DemoApp -e Pods
 
