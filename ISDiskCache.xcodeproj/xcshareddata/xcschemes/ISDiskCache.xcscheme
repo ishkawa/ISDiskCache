@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7F77E9BE177E7243005BBE22"
-               BuildableName = "ISDiskCacheTests.octest"
-               BlueprintName = "ISDiskCacheTests"
+               BlueprintIdentifier = "7F014E2518844910009C073C"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:ISDiskCache.xcodeproj">
             </BuildableReference>
          </TestableReference>

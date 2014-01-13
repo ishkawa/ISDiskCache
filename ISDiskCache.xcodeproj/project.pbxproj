@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F014E2718844911009C073C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F014E20188448CC009C073C /* XCTest.framework */; };
+		7F014E2818844911009C073C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
+		7F014E2918844911009C073C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBE90F3177FAE6300352BE7 /* UIKit.framework */; };
+		7F014E2F18844911009C073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F014E2D18844911009C073C /* InfoPlist.strings */; };
+		7F014E391884494E009C073C /* ISDiskCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F014E381884494E009C073C /* ISDiskCacheTests.m */; };
+		7F014E3A18844995009C073C /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
 		7F77E9B2177E7243005BBE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
 		7F77E9B7177E7243005BBE22 /* ISDiskCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F77E9B6177E7243005BBE22 /* ISDiskCache.h */; };
 		7F77E9B9177E7243005BBE22 /* ISDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F77E9B8177E7243005BBE22 /* ISDiskCache.m */; };
-		7F77E9C1177E7243005BBE22 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */; };
-		7F77E9C4177E7243005BBE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
-		7F77E9C7177E7243005BBE22 /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
-		7F77E9CD177E7243005BBE22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F77E9CB177E7243005BBE22 /* InfoPlist.strings */; };
-		7F77E9D0177E7243005BBE22 /* ISDiskCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F77E9CF177E7243005BBE22 /* ISDiskCacheTests.m */; };
 		7F959A7E177FA7650082C3CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
 		7F959A80177FA7650082C3CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F959A7F177FA7650082C3CF /* CoreGraphics.framework */; };
 		7F959A86177FA7650082C3CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F959A84177FA7650082C3CF /* InfoPlist.strings */; };
@@ -31,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7F77E9C5177E7243005BBE22 /* PBXContainerItemProxy */ = {
+		7F014E3318844911009C073C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F77E9A6177E7243005BBE22 /* Project object */;
 			proxyType = 1;
@@ -61,16 +62,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7F014E20188448CC009C073C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7F014E2618844910009C073C /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F014E2C18844911009C073C /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		7F014E2E18844911009C073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7F014E3218844911009C073C /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		7F014E381884494E009C073C /* ISDiskCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISDiskCacheTests.m; sourceTree = "<group>"; };
 		7F77E9AE177E7243005BBE22 /* libISDiskCache.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISDiskCache.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F77E9B1177E7243005BBE22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F77E9B5177E7243005BBE22 /* ISDiskCache-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISDiskCache-Prefix.pch"; sourceTree = "<group>"; };
 		7F77E9B6177E7243005BBE22 /* ISDiskCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISDiskCache.h; sourceTree = "<group>"; };
 		7F77E9B8177E7243005BBE22 /* ISDiskCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISDiskCache.m; sourceTree = "<group>"; };
-		7F77E9BF177E7243005BBE22 /* ISDiskCacheTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISDiskCacheTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		7F77E9CA177E7243005BBE22 /* ISDiskCacheTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISDiskCacheTests-Info.plist"; sourceTree = "<group>"; };
-		7F77E9CC177E7243005BBE22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7F77E9CF177E7243005BBE22 /* ISDiskCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISDiskCacheTests.m; sourceTree = "<group>"; };
 		7F959A7C177FA7650082C3CF /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F959A7F177FA7650082C3CF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7F959A83177FA7650082C3CF /* DemoApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DemoApp-Info.plist"; sourceTree = "<group>"; };
@@ -90,21 +92,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7F014E2318844910009C073C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F014E3A18844995009C073C /* libISDiskCache.a in Frameworks */,
+				7F014E2718844911009C073C /* XCTest.framework in Frameworks */,
+				7F014E2918844911009C073C /* UIKit.framework in Frameworks */,
+				7F014E2818844911009C073C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7F77E9AB177E7243005BBE22 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				7F77E9B2177E7243005BBE22 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7F77E9BB177E7243005BBE22 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7F77E9C1177E7243005BBE22 /* SenTestingKit.framework in Frameworks */,
-				7F77E9C4177E7243005BBE22 /* Foundation.framework in Frameworks */,
-				7F77E9C7177E7243005BBE22 /* libISDiskCache.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,11 +125,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F014E2A18844911009C073C /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				7F014E381884494E009C073C /* ISDiskCacheTests.m */,
+				7F014E2B18844911009C073C /* Supporting Files */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		7F014E2B18844911009C073C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F014E2C18844911009C073C /* UnitTests-Info.plist */,
+				7F014E2D18844911009C073C /* InfoPlist.strings */,
+				7F014E3218844911009C073C /* UnitTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		7F77E9A5177E7243005BBE22 = {
 			isa = PBXGroup;
 			children = (
 				7F77E9B3177E7243005BBE22 /* ISDiskCache */,
-				7F77E9C8177E7243005BBE22 /* ISDiskCacheTests */,
+				7F014E2A18844911009C073C /* UnitTests */,
 				7F959A81177FA7650082C3CF /* DemoApp */,
 				7F77E9B0177E7243005BBE22 /* Frameworks */,
 				7F77E9AF177E7243005BBE22 /* Products */,
@@ -137,8 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				7F77E9AE177E7243005BBE22 /* libISDiskCache.a */,
-				7F77E9BF177E7243005BBE22 /* ISDiskCacheTests.octest */,
 				7F959A7C177FA7650082C3CF /* DemoApp.app */,
+				7F014E2618844910009C073C /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,9 +168,9 @@
 		7F77E9B0177E7243005BBE22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F014E20188448CC009C073C /* XCTest.framework */,
 				7FBE90F3177FAE6300352BE7 /* UIKit.framework */,
 				7F77E9B1177E7243005BBE22 /* Foundation.framework */,
-				7F77E9C0177E7243005BBE22 /* SenTestingKit.framework */,
 				7F959A7F177FA7650082C3CF /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
@@ -168,24 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				7F77E9B5177E7243005BBE22 /* ISDiskCache-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7F77E9C8177E7243005BBE22 /* ISDiskCacheTests */ = {
-			isa = PBXGroup;
-			children = (
-				7F77E9CF177E7243005BBE22 /* ISDiskCacheTests.m */,
-				7F77E9C9177E7243005BBE22 /* Supporting Files */,
-			);
-			path = ISDiskCacheTests;
-			sourceTree = "<group>";
-		};
-		7F77E9C9177E7243005BBE22 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7F77E9CA177E7243005BBE22 /* ISDiskCacheTests-Info.plist */,
-				7F77E9CB177E7243005BBE22 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -221,6 +225,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		7F014E2518844910009C073C /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F014E3518844911009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				7F014E2218844910009C073C /* Sources */,
+				7F014E2318844910009C073C /* Frameworks */,
+				7F014E2418844910009C073C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F014E3418844911009C073C /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 7F014E2618844910009C073C /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7F77E9AD177E7243005BBE22 /* ISDiskCache */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F77E9D3177E7243005BBE22 /* Build configuration list for PBXNativeTarget "ISDiskCache" */;
@@ -237,25 +259,6 @@
 			productName = ISDiskCache;
 			productReference = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		7F77E9BE177E7243005BBE22 /* ISDiskCacheTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7F77E9D6177E7243005BBE22 /* Build configuration list for PBXNativeTarget "ISDiskCacheTests" */;
-			buildPhases = (
-				7F77E9BA177E7243005BBE22 /* Sources */,
-				7F77E9BB177E7243005BBE22 /* Frameworks */,
-				7F77E9BC177E7243005BBE22 /* Resources */,
-				7F77E9BD177E7243005BBE22 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7F77E9C6177E7243005BBE22 /* PBXTargetDependency */,
-			);
-			name = ISDiskCacheTests;
-			productName = ISDiskCacheTests;
-			productReference = 7F77E9BF177E7243005BBE22 /* ISDiskCacheTests.octest */;
-			productType = "com.apple.product-type.bundle";
 		};
 		7F959A7B177FA7650082C3CF /* DemoApp */ = {
 			isa = PBXNativeTarget;
@@ -283,6 +286,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Yosuke Ishikawa";
+				TargetAttributes = {
+					7F014E2518844910009C073C = {
+						TestTargetID = 7F77E9AD177E7243005BBE22;
+					};
+				};
 			};
 			buildConfigurationList = 7F77E9A9177E7243005BBE22 /* Build configuration list for PBXProject "ISDiskCache" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -297,18 +305,18 @@
 			projectRoot = "";
 			targets = (
 				7F77E9AD177E7243005BBE22 /* ISDiskCache */,
-				7F77E9BE177E7243005BBE22 /* ISDiskCacheTests */,
+				7F014E2518844910009C073C /* UnitTests */,
 				7F959A7B177FA7650082C3CF /* DemoApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7F77E9BC177E7243005BBE22 /* Resources */ = {
+		7F014E2418844910009C073C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F77E9CD177E7243005BBE22 /* InfoPlist.strings in Resources */,
+				7F014E2F18844911009C073C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,36 +335,20 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		7F77E9BD177E7243005BBE22 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
+/* Begin PBXSourcesBuildPhase section */
+		7F014E2218844910009C073C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
+				7F014E391884494E009C073C /* ISDiskCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		7F77E9AA177E7243005BBE22 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				7F77E9B9177E7243005BBE22 /* ISDiskCache.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7F77E9BA177E7243005BBE22 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7F77E9D0177E7243005BBE22 /* ISDiskCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,10 +365,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7F77E9C6177E7243005BBE22 /* PBXTargetDependency */ = {
+		7F014E3418844911009C073C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7F77E9AD177E7243005BBE22 /* ISDiskCache */;
-			targetProxy = 7F77E9C5177E7243005BBE22 /* PBXContainerItemProxy */;
+			targetProxy = 7F014E3318844911009C073C /* PBXContainerItemProxy */;
 		};
 		7FBE90F1177FAE5600352BE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -386,10 +378,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7F77E9CB177E7243005BBE22 /* InfoPlist.strings */ = {
+		7F014E2D18844911009C073C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7F77E9CC177E7243005BBE22 /* en */,
+				7F014E2E18844911009C073C /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -405,6 +397,63 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7F014E3618844911009C073C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		7F014E3718844911009C073C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		7F77E9D1177E7243005BBE22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -462,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ISDiskCache.dst;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -474,41 +524,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ISDiskCache.dst;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		7F77E9D7177E7243005BBE22 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
-				INFOPLIST_FILE = "ISDiskCacheTests/ISDiskCacheTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		7F77E9D8177E7243005BBE22 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
-				INFOPLIST_FILE = "ISDiskCacheTests/ISDiskCacheTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -550,6 +571,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7F014E3518844911009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F014E3618844911009C073C /* Debug */,
+				7F014E3718844911009C073C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		7F77E9A9177E7243005BBE22 /* Build configuration list for PBXProject "ISDiskCache" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -564,15 +593,6 @@
 			buildConfigurations = (
 				7F77E9D4177E7243005BBE22 /* Debug */,
 				7F77E9D5177E7243005BBE22 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7F77E9D6177E7243005BBE22 /* Build configuration list for PBXNativeTarget "ISDiskCacheTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7F77E9D7177E7243005BBE22 /* Debug */,
-				7F77E9D8177E7243005BBE22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
