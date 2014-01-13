@@ -1,7 +1,7 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "ISDiskCache.h"
 
-@interface ISDiskCacheTests : SenTestCase {
+@interface ISDiskCacheTests : XCTestCase {
     ISDiskCache *cache;
     id <NSCoding> key;
     id <NSCoding> value;
@@ -35,7 +35,7 @@
 
 - (void)testSharedInstance
 {
-    STAssertEqualObjects([ISDiskCache sharedCache], [ISDiskCache sharedCache], @"shared instance does not match.");
+    XCTAssertEqualObjects([ISDiskCache sharedCache], [ISDiskCache sharedCache], @"shared instance does not match.");
 }
 
 #pragma mark - basic operations for key
@@ -44,14 +44,14 @@
 {
     [cache setObject:value forKey:key];
     
-    STAssertEqualObjects([cache objectForKey:key], value, @"object did not match set object.");
+    XCTAssertEqualObjects([cache objectForKey:key], value, @"object did not match set object.");
 }
 
 - (void)testHasObjectForKey
 {
-    STAssertFalse([cache hasObjectForKey:key], @"returned YES before setting object.");
+    XCTAssertFalse([cache hasObjectForKey:key], @"returned YES before setting object.");
     [cache setObject:value forKey:key];
-    STAssertTrue([cache hasObjectForKey:key], @"returned NO after setting object.");
+    XCTAssertTrue([cache hasObjectForKey:key], @"returned NO after setting object.");
 }
 
 - (void)testRemoveObjectForKey
@@ -59,7 +59,7 @@
     [cache setObject:value forKey:key];
     [cache removeObjectForKey:key];
     
-    STAssertNil([cache objectForKey:key], @"object for removed key should be nil.");
+    XCTAssertNil([cache objectForKey:key], @"object for removed key should be nil.");
 }
 
 
@@ -77,7 +77,7 @@
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
     NSDate *modificationDate = [attributes objectForKey:NSFileModificationDate];
     
-    STAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0, nil);
+    XCTAssertTrue(ABS([accessedDate timeIntervalSinceDate:modificationDate]) < 1.0);
 }
 
 
@@ -90,17 +90,17 @@
         return YES;
     }];
     
-    STAssertNil([cache objectForKey:key], @"cache should be empty.");
+    XCTAssertNil([cache objectForKey:key], @"cache should be empty.");
 }
 
 - (void)testRemoveObjectsByModificationDate
 {
     [cache setObject:value forKey:key];
     [cache removeObjectsByAccessedDate:[NSDate dateWithTimeIntervalSinceNow:-10.0]];
-    STAssertEqualObjects([cache objectForKey:key], value, @"should not remove object.");
+    XCTAssertEqualObjects([cache objectForKey:key], value, @"should not remove object.");
     
     [cache removeObjectsByAccessedDate:[NSDate date]];
-    STAssertNil([cache objectForKey:key], @"should remove object.");
+    XCTAssertNil([cache objectForKey:key], @"should remove object.");
 }
 
 - (void)testRemoveParentDirectoryIfSiblingsDoesNotExist
@@ -109,7 +109,7 @@
     [cache setObject:value forKey:key];
     [cache removeObjectForKey:key];
     
-    STAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:directoryPath], @"did not remove parect directory.");
+    XCTAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:directoryPath], @"did not remove parect directory.");
 }
 
 
@@ -126,8 +126,8 @@
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
     }
     
-    STAssertNil([cache objectForKey:@1], nil);
-    STAssertNotNil([cache objectForKey:@(count - 1)], nil);
+    XCTAssertNil([cache objectForKey:@1]);
+    XCTAssertNotNil([cache objectForKey:@(count - 1)]);
 }
 
 
