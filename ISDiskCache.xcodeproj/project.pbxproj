@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F014E2718844911009C073C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F014E20188448CC009C073C /* XCTest.framework */; };
-		7F014E2818844911009C073C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
-		7F014E2918844911009C073C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBE90F3177FAE6300352BE7 /* UIKit.framework */; };
-		7F014E2F18844911009C073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F014E2D18844911009C073C /* InfoPlist.strings */; };
-		7F014E391884494E009C073C /* ISDiskCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F014E381884494E009C073C /* ISDiskCacheTests.m */; };
-		7F014E3A18844995009C073C /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
+		7F014E4018844F72009C073C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F014E20188448CC009C073C /* XCTest.framework */; };
+		7F014E4118844F72009C073C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
+		7F014E4218844F72009C073C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBE90F3177FAE6300352BE7 /* UIKit.framework */; };
+		7F014E4818844F72009C073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F014E4618844F72009C073C /* InfoPlist.strings */; };
+		7F014E5218844F97009C073C /* ISDiskCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F014E5118844F97009C073C /* ISDiskCacheTests.m */; };
 		7F77E9B2177E7243005BBE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9B1177E7243005BBE22 /* Foundation.framework */; };
 		7F77E9B7177E7243005BBE22 /* ISDiskCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F77E9B6177E7243005BBE22 /* ISDiskCache.h */; };
 		7F77E9B9177E7243005BBE22 /* ISDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F77E9B8177E7243005BBE22 /* ISDiskCache.m */; };
@@ -29,15 +28,16 @@
 		7FBE90EF177FABA400352BE7 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBE90ED177FABA400352BE7 /* placeholder@2x.png */; };
 		7FBE90F2177FAE5A00352BE7 /* libISDiskCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F77E9AE177E7243005BBE22 /* libISDiskCache.a */; };
 		7FBE90F4177FAE6300352BE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBE90F3177FAE6300352BE7 /* UIKit.framework */; };
+		CF9DDA827176457A8256CC68 /* libPods-UnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3D3125F8A04198995B0181 /* libPods-UnitTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7F014E3318844911009C073C /* PBXContainerItemProxy */ = {
+		7F014E4C18844F72009C073C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F77E9A6177E7243005BBE22 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7F77E9AD177E7243005BBE22;
-			remoteInfo = ISDiskCache;
+			remoteGlobalIDString = 7F959A7B177FA7650082C3CF;
+			remoteInfo = DemoApp;
 		};
 		7FBE90F0177FAE5600352BE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -62,12 +62,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		48C563A966544AC2934599C4 /* Pods-UnitTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.xcconfig"; path = "Pods/Pods-UnitTests.xcconfig"; sourceTree = "<group>"; };
+		6D3D3125F8A04198995B0181 /* libPods-UnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F014E20188448CC009C073C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		7F014E2618844910009C073C /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F014E2C18844911009C073C /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
-		7F014E2E18844911009C073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7F014E3218844911009C073C /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
-		7F014E381884494E009C073C /* ISDiskCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISDiskCacheTests.m; sourceTree = "<group>"; };
+		7F014E3F18844F72009C073C /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F014E4518844F72009C073C /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		7F014E4718844F72009C073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7F014E4B18844F72009C073C /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		7F014E5118844F97009C073C /* ISDiskCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISDiskCacheTests.m; sourceTree = "<group>"; };
 		7F77E9AE177E7243005BBE22 /* libISDiskCache.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISDiskCache.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F77E9B1177E7243005BBE22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F77E9B5177E7243005BBE22 /* ISDiskCache-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISDiskCache-Prefix.pch"; sourceTree = "<group>"; };
@@ -92,14 +94,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7F014E2318844910009C073C /* Frameworks */ = {
+		7F014E3C18844F72009C073C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F014E3A18844995009C073C /* libISDiskCache.a in Frameworks */,
-				7F014E2718844911009C073C /* XCTest.framework in Frameworks */,
-				7F014E2918844911009C073C /* UIKit.framework in Frameworks */,
-				7F014E2818844911009C073C /* Foundation.framework in Frameworks */,
+				7F014E4018844F72009C073C /* XCTest.framework in Frameworks */,
+				7F014E4218844F72009C073C /* UIKit.framework in Frameworks */,
+				7F014E4118844F72009C073C /* Foundation.framework in Frameworks */,
+				CF9DDA827176457A8256CC68 /* libPods-UnitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,21 +127,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7F014E2A18844911009C073C /* UnitTests */ = {
+		7F014E4318844F72009C073C /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				7F014E381884494E009C073C /* ISDiskCacheTests.m */,
-				7F014E2B18844911009C073C /* Supporting Files */,
+				7F014E5118844F97009C073C /* ISDiskCacheTests.m */,
+				7F014E4418844F72009C073C /* Supporting Files */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		7F014E2B18844911009C073C /* Supporting Files */ = {
+		7F014E4418844F72009C073C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7F014E2C18844911009C073C /* UnitTests-Info.plist */,
-				7F014E2D18844911009C073C /* InfoPlist.strings */,
-				7F014E3218844911009C073C /* UnitTests-Prefix.pch */,
+				7F014E4518844F72009C073C /* UnitTests-Info.plist */,
+				7F014E4618844F72009C073C /* InfoPlist.strings */,
+				7F014E4B18844F72009C073C /* UnitTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -148,10 +150,11 @@
 			isa = PBXGroup;
 			children = (
 				7F77E9B3177E7243005BBE22 /* ISDiskCache */,
-				7F014E2A18844911009C073C /* UnitTests */,
 				7F959A81177FA7650082C3CF /* DemoApp */,
+				7F014E4318844F72009C073C /* UnitTests */,
 				7F77E9B0177E7243005BBE22 /* Frameworks */,
 				7F77E9AF177E7243005BBE22 /* Products */,
+				48C563A966544AC2934599C4 /* Pods-UnitTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,7 +163,7 @@
 			children = (
 				7F77E9AE177E7243005BBE22 /* libISDiskCache.a */,
 				7F959A7C177FA7650082C3CF /* DemoApp.app */,
-				7F014E2618844910009C073C /* UnitTests.xctest */,
+				7F014E3F18844F72009C073C /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				7FBE90F3177FAE6300352BE7 /* UIKit.framework */,
 				7F77E9B1177E7243005BBE22 /* Foundation.framework */,
 				7F959A7F177FA7650082C3CF /* CoreGraphics.framework */,
+				6D3D3125F8A04198995B0181 /* libPods-UnitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,22 +229,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7F014E2518844910009C073C /* UnitTests */ = {
+		7F014E3E18844F72009C073C /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F014E3518844911009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildConfigurationList = 7F014E4E18844F72009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
-				7F014E2218844910009C073C /* Sources */,
-				7F014E2318844910009C073C /* Frameworks */,
-				7F014E2418844910009C073C /* Resources */,
+				0B628386D22944C1A002E595 /* Check Pods Manifest.lock */,
+				7F014E3B18844F72009C073C /* Sources */,
+				7F014E3C18844F72009C073C /* Frameworks */,
+				7F014E3D18844F72009C073C /* Resources */,
+				15B96CE419D64D6A902EDEFB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7F014E3418844911009C073C /* PBXTargetDependency */,
+				7F014E4D18844F72009C073C /* PBXTargetDependency */,
 			);
 			name = UnitTests;
 			productName = UnitTests;
-			productReference = 7F014E2618844910009C073C /* UnitTests.xctest */;
+			productReference = 7F014E3F18844F72009C073C /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		7F77E9AD177E7243005BBE22 /* ISDiskCache */ = {
@@ -287,8 +293,8 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Yosuke Ishikawa";
 				TargetAttributes = {
-					7F014E2518844910009C073C = {
-						TestTargetID = 7F77E9AD177E7243005BBE22;
+					7F014E3E18844F72009C073C = {
+						TestTargetID = 7F959A7B177FA7650082C3CF;
 					};
 				};
 			};
@@ -305,18 +311,18 @@
 			projectRoot = "";
 			targets = (
 				7F77E9AD177E7243005BBE22 /* ISDiskCache */,
-				7F014E2518844910009C073C /* UnitTests */,
 				7F959A7B177FA7650082C3CF /* DemoApp */,
+				7F014E3E18844F72009C073C /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7F014E2418844910009C073C /* Resources */ = {
+		7F014E3D18844F72009C073C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F014E2F18844911009C073C /* InfoPlist.strings in Resources */,
+				7F014E4818844F72009C073C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,12 +341,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0B628386D22944C1A002E595 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		15B96CE419D64D6A902EDEFB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-UnitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		7F014E2218844910009C073C /* Sources */ = {
+		7F014E3B18844F72009C073C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F014E391884494E009C073C /* ISDiskCacheTests.m in Sources */,
+				7F014E5218844F97009C073C /* ISDiskCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,10 +404,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7F014E3418844911009C073C /* PBXTargetDependency */ = {
+		7F014E4D18844F72009C073C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7F77E9AD177E7243005BBE22 /* ISDiskCache */;
-			targetProxy = 7F014E3318844911009C073C /* PBXContainerItemProxy */;
+			target = 7F959A7B177FA7650082C3CF /* DemoApp */;
+			targetProxy = 7F014E4C18844F72009C073C /* PBXContainerItemProxy */;
 		};
 		7FBE90F1177FAE5600352BE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -378,10 +417,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7F014E2D18844911009C073C /* InfoPlist.strings */ = {
+		7F014E4618844F72009C073C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7F014E2E18844911009C073C /* en */,
+				7F014E4718844F72009C073C /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -397,10 +436,12 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7F014E3618844911009C073C /* Debug */ = {
+		7F014E4F18844F72009C073C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48C563A966544AC2934599C4 /* Pods-UnitTests.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -410,6 +451,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -423,14 +465,17 @@
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		7F014E3718844911009C073C /* Release */ = {
+		7F014E5018844F72009C073C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48C563A966544AC2934599C4 /* Pods-UnitTests.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -441,6 +486,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -450,6 +496,7 @@
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -511,7 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ISDiskCache.dst;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -524,7 +571,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ISDiskCache.dst;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISDiskCache/ISDiskCache-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -541,6 +588,8 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
@@ -558,6 +607,8 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
@@ -571,13 +622,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7F014E3518844911009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+		7F014E4E18844F72009C073C /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7F014E3618844911009C073C /* Debug */,
-				7F014E3718844911009C073C /* Release */,
+				7F014E4F18844F72009C073C /* Debug */,
+				7F014E5018844F72009C073C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F77E9A9177E7243005BBE22 /* Build configuration list for PBXProject "ISDiskCache" */ = {
 			isa = XCConfigurationList;

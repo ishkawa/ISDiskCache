@@ -5,6 +5,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (NSClassFromString(@"XCTest")) {
+        return YES;
+    }
+    
     ISViewController *viewController = [[ISViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] init];
     navigationController.viewControllers = @[viewController];
